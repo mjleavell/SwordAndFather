@@ -16,15 +16,30 @@ namespace SwordAndFather.Controllers
         List<User> _users = new List<User>();
 
         [HttpPost("register")]
-        public int AddUser(string username, string password)
+        // asp.net is creating user for us.
+        // Bad Request and Crated methods are getting inherited from the base class
+        // ActionResult doesnt necessarily need a type
+        public ActionResult<int> AddUser(User newUser)
         {
-            var newUser = new User(username, password);
+            //validation
+            if(string.IsNullOrEmpty(newUser.Username) || string.IsNullOrEmpty(newUser.Password))
+            {
+                // below is how you create a new anonymous type
+                // have to return bad request in order for it to actually be seen
+                return BadRequest(new { error = "users must have a username and password" });
+            }
+
+
+            //var newUser = new User(createRequest.Username, createRequest.password);
 
             newUser.Id = _users.Count + 1;
 
             _users.Add(newUser);
 
-            return newUser.Id;
+            //return newUser.Id;
+
+            // Created method is a method that gives us 201
+            return Created($"api/users/{newUser.Id}", newUser);
         }
     }
 }
