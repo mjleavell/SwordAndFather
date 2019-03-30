@@ -24,7 +24,6 @@ namespace SwordAndFather.Controllers
             _assassinRepository = new AssassinRepository();
         }
 
-
         // Attribute
         [HttpPost]
         // AddAssassin Method
@@ -36,34 +35,10 @@ namespace SwordAndFather.Controllers
                 return BadRequest();
             }
 
-            _assassinRepository.AddAssassin(request.CodeName, request.Catchphrase, request.PreferredWeapon);
+            var newAssassin = _assassinRepository.AddAssassin(request.CodeName, request.Catchphrase, request.PreferredWeapon);
+
+            return Created($"api/Assassin/{newAssassin.Id}", newAssassin);
         }
     }
 
-    public class AssassinRepository
-    {
-        static readonly List<Assassin> Assassins = new List<Assassin>();
-    
-        public Assassin AddAssassin(string codeName, string catchphrase, string preferredWeapon)
-        {
-            var newAssassin = new Assassin(codeName, catchphrase, preferredWeapon);
-
-            newAssassin.Id = Assassins.Count + 1;
-
-            Assassins.Add(newAssassin);
-
-            return newAssassin;
-        }       
-    }
-
-    public class CreateAssassinRequestValidator
-    {
-        public bool Validate(CreateAssassinRequest request)
-        {
-            // if any of these are true, it isnt valid; same logic as createuser logic just written differently
-            return !string.IsNullOrEmpty(request.Catchphrase) &&
-                !string.IsNullOrEmpty(request.CodeName) &&
-                !string.IsNullOrEmpty(request.PreferredWeapon);
-        }
-    }
 }
