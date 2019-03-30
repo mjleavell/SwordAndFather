@@ -22,7 +22,7 @@ namespace SwordAndFather.Controllers
         //public ActionResult<int> AddUser(User newUser)
         public ActionResult<int> AddUser(CreateUserRequest createRequest)
         {
-            //validation
+            // ****validation****
             if (string.IsNullOrEmpty(createRequest.Username) && string.IsNullOrEmpty(createRequest.Password))
             {
                 // below is how you create a new anonymous type
@@ -30,8 +30,8 @@ namespace SwordAndFather.Controllers
                 return BadRequest(new { error = "users must have a username and password" });
             }
 
-
-            var newUser = new User(createRequest.Username, createRequest.password);
+            // ****database-y sort of thing****
+            var newUser = new User(createRequest.Username, createRequest.Password);
 
             newUser.Id = _users.Count + 1;
 
@@ -39,8 +39,14 @@ namespace SwordAndFather.Controllers
 
             //return newUser.Id;
 
+            // ****HTTP Response****
             // Created method is a method that gives us 201
             return Created($"api/users/{newUser.Id}", newUser);
         }
+    }
+
+    public class createUserRequestValidator
+    {
+
     }
 }
