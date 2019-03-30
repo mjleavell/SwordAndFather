@@ -13,23 +13,23 @@ namespace SwordAndFather.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        // fields
+        // Models
         readonly UserRepository _userRepository;
         readonly CreateUserRequestValidator _validator;
-
-        // property
+        
+        // Controller
         public UsersController()
         {
             var _validator = new CreateUserRequestValidator();
             var _userRepository = new UserRepository();
         }
 
-
+        // Attributes
         [HttpPost("register")]
         // asp.net is creating user for us.
         // Bad Request and Crated methods are getting inherited from the base class; ActionResult doesnt necessarily need a type
         //public ActionResult<int> AddUser(User newUser)
-        public ActionResult<int> AddUser(CreateUserRequest createRequest)
+        public ActionResult AddUser(CreateUserRequest createRequest)
         {
 
             if (!_validator.Validate(createRequest))
@@ -43,6 +43,17 @@ namespace SwordAndFather.Controllers
             // ****HTTP Response****
             // Created method is a method that gives us 201
             return Created($"api/users/{newUser.Id}", newUser);
+
+
+            // Other way to write it...kinda makes more sense
+            // ************ If it is valid, do this. Else return error ************
+            //if (_validator.Validate(createRequest))
+            //{
+            //    var newUser = _userRepository.AddUser(createRequest.Username, createRequest.Password);
+            //    return Created($"api/users/{newUser.Id}", newUser);
+            //}
+            //return BadRequest(new { error = "users must have a username and password" });
+
         }
     }
 }

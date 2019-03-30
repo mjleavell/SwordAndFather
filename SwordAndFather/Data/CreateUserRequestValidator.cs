@@ -10,8 +10,9 @@ namespace SwordAndFather.Data
     {
         public bool Validate(CreateUserRequest requestToValidate)
         {
-            return string.IsNullOrEmpty(requestToValidate.Username)
-                || string.IsNullOrEmpty(requestToValidate.Password);
+            // false for invalid; true for valid
+            return !(string.IsNullOrEmpty(requestToValidate.Username)
+                || string.IsNullOrEmpty(requestToValidate.Password));
         }
     }
 }
