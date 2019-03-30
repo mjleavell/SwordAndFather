@@ -11,5 +11,9 @@ namespace SwordAndFather.Controllers
     [ApiController]
     public class AssassinController : ControllerBase
     {
+        public ActionResult AddAssassin()
+        {
+
+        }
     }
 }
