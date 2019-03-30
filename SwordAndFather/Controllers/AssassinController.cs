@@ -39,6 +39,11 @@ namespace SwordAndFather.Controllers
 
             return Created($"api/Assassin/{newAssassin.Id}", newAssassin);
         }
+
     }
 
+    public interface IValidator<TToValidate>
+    {
+        bool Validate(TToValidate objectToValidate);
+    }
 }

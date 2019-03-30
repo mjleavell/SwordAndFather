@@ -1,9 +1,10 @@
-﻿using SwordAndFather.Data;
+﻿using SwordAndFather.Controllers;
+using SwordAndFather.Data;
 using SwordAndFather.Models;
 
-namespace SwordAndFather.Controllers
+namespace SwordAndFather.Data
 {
-    public class CreateAssassinRequestValidator
+    public class CreateAssassinRequestValidator : IValidator<CreateAssassinRequest>
     {
         public bool Validate(CreateAssassinRequest request)
         {

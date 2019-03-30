@@ -20,8 +20,8 @@ namespace SwordAndFather.Controllers
         // Controller
         public UsersController()
         {
-            var _validator = new CreateUserRequestValidator();
-            var _userRepository = new UserRepository();
+            _validator = new CreateUserRequestValidator();
+            _userRepository = new UserRepository();
         }
 
         // Attributes
